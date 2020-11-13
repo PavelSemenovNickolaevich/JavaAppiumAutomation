@@ -139,13 +139,13 @@ public class FirstTest {
                 5
         );
 
-       WebElement title_element =  waitForElementPresent(
+        WebElement title_element = waitForElementPresent(
                 By.xpath("//*[@content-desc='Java (programming language)']"),
                 "Cannot find OOP language by 'Java'",
                 5
         );
 
-       String article_title = title_element.getAttribute("name");
+        String article_title = title_element.getAttribute("name");
         Assert.assertEquals(
                 "We see unexpected title",
                 "Java (programming language)",
