@@ -39,11 +39,31 @@ public class Lesson3 {
         driver.quit();
     }
 
-   @Test
+    @Test
+    public void fistTest() throws InterruptedException {
 
 
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'SKIP')]"),
+                "Cannot find SKIP element",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
 
 
+        assertElementHasText(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Search Wikipedia",
+                "Text doesnt exist"
+        );
+
+
+    }
 
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
@@ -57,6 +77,11 @@ public class Lesson3 {
     private WebElement waitForElementPresent(By by, String error_message) {
         return waitForElementPresent(by, error_message, 5);
     }
+
+    private WebElement waitForElementPresent(By by, String message, String error_message) {
+        return waitForElementPresent(by, error_message, 5);
+    }
+
 
     private WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
@@ -88,5 +113,15 @@ public class Lesson3 {
     }
 
 
+    private Object assertElementHasText(By by, String expectedText, String error_message) {
+        WebElement element = waitForElementPresent(by, "Element doesnt exist", 4);
+        String text = element.getAttribute("text");
+        if (text.contains(expectedText)) {
+            return element;
+        } else {
+            Assert.assertEquals(error_message, expectedText, text);
+            return false;
+        }
+    }
 }
 
