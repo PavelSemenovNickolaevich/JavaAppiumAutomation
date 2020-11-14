@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Lesson3 {
 
@@ -42,7 +44,6 @@ public class Lesson3 {
     @Test
     public void fistTest() throws InterruptedException {
 
-
         waitForElementAndClick(
                 By.xpath("//*[contains(@text,'SKIP')]"),
                 "Cannot find SKIP element",
@@ -62,9 +63,68 @@ public class Lesson3 {
                 "Text doesnt exist"
         );
 
-
     }
 
+    @Test
+    public void cancelSearch() {
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'SKIP')]"),
+                "Cannot find SKIP element",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Android",
+                "Cannot find search input",
+                5
+        );
+
+        List<WebElement> titles = listOfElements(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "Titles doesnt exist",
+                10
+        );
+
+        String article_titleOne = titles.get(0).getAttribute("text");
+        String article_titleTwo = titles.get(1).getAttribute("text");
+        String article_titleThree = titles.get(2).getAttribute("text");
+
+        List<String> expectedList = new ArrayList<>();
+        expectedList.add("Android");
+        expectedList.add("Android (operating system)");
+        expectedList.add("Android version history");
+        List<String> actualList = new ArrayList<>();
+        actualList.add(article_titleOne);
+        actualList.add(article_titleTwo);
+        actualList.add(article_titleThree);
+        Assert.assertEquals(
+                "We see unexpected title",
+                expectedList,
+                actualList
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Element doesnt exist",
+                5
+        );
+
+        waitForElementNotPresent(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "Titles exist!!!",
+                10
+        );
+
+
+    }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
@@ -72,6 +132,12 @@ public class Lesson3 {
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
         );
+    }
+
+    private List findElements(By by, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n").until(ExpectedConditions.presenceOfElementLocated(by)); //throws a timeout exception if element not present after waiting <timeoutInSeconds> seconds
+        return driver.findElements(by);
     }
 
     private WebElement waitForElementPresent(By by, String error_message) {
@@ -123,5 +189,10 @@ public class Lesson3 {
             return false;
         }
     }
-}
 
+    private List<WebElement> listOfElements(By by, String error_message, long timeoutInSeconds) {
+        List<WebElement> elements = (List<WebElement>) findElements(by, error_message, timeoutInSeconds);
+        return elements;
+    }
+
+}
