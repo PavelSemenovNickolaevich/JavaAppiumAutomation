@@ -123,6 +123,36 @@ public class Lesson3 {
                 10
         );
 
+    }
+
+    @Test
+    public void checkWordInResult() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'SKIP')]"),
+                "Cannot find SKIP element",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Adventure",
+                "Cannot find search input",
+                5
+        );
+
+       Boolean isContain = listOfElementsContainsWord(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "Titles doesnt exist",
+                5,
+                "Adventure"
+        );
+        Assert.assertTrue("The word doesnt contain in search results", isContain);
 
     }
 
@@ -194,5 +224,18 @@ public class Lesson3 {
         List<WebElement> elements = (List<WebElement>) findElements(by, error_message, timeoutInSeconds);
         return elements;
     }
+
+    private boolean listOfElementsContainsWord(By by, String error_message, long timeoutInSeconds, String word) {
+        List<WebElement> elements = (List<WebElement>) findElements(by, error_message, timeoutInSeconds);
+        for(int i = 0; i < elements.size(); i++) {
+            String text = elements.get(i).getAttribute("text");
+            if (text.contains(word)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 }
