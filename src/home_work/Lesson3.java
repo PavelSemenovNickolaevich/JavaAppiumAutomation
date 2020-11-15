@@ -146,7 +146,7 @@ public class Lesson3 {
                 5
         );
 
-       Boolean isContain = listOfElementsContainsWord(
+        Boolean isContain = listOfElementsContainsWord(
                 By.id("org.wikipedia:id/page_list_item_title"),
                 "Titles doesnt exist",
                 5,
@@ -226,16 +226,16 @@ public class Lesson3 {
     }
 
     private boolean listOfElementsContainsWord(By by, String error_message, long timeoutInSeconds, String word) {
+        String text = "";
         List<WebElement> elements = (List<WebElement>) findElements(by, error_message, timeoutInSeconds);
-        for(int i = 0; i < elements.size(); i++) {
-            String text = elements.get(i).getAttribute("text");
-            if (text.contains(word)){
-                return true;
+        for (int i = 0; i < elements.size(); i++) {
+            text = elements.get(i).getAttribute("text");
+            if (!text.contains(word)) {
+                System.out.println(text);
+                return false;
             }
         }
-        return false;
+        return true;
     }
-
-
 
 }
