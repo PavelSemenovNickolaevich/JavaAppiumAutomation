@@ -200,6 +200,47 @@ public class Lecture4 {
 
     }
 
+    @Test
+    public void assertTitle() {
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'SKIP')]"),
+                "Cannot find SKIP element",
+                1
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Object-oriented programming language']"),
+                "Cannot find OOP language by 'Java'",
+                5
+        );
+
+
+        assertElementPresent(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot find element - title"
+        );
+
+
+    }
+
+
+
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -303,5 +344,17 @@ public class Lecture4 {
 
         WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
         return element.getAttribute(attribute);
+    }
+
+    private void  assertElementPresent(By by, String error_message) {
+        WebElement element = getElement(by);
+        if(!element.isEnabled()) {
+            System.out.println(error_message);
+        }
+    }
+
+    private WebElement getElement(By by) {
+        WebElement element = driver.findElement(by);
+        return element;
     }
 }
