@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -45,6 +46,7 @@ public class Lecture4 {
 
     @Test
     public void saveTwoArticles() {
+
 
         waitForElementAndClick(
                 By.xpath("//*[contains(@text,'SKIP')]"),
@@ -197,11 +199,15 @@ public class Lecture4 {
                 5
         );
 
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+
 
     }
 
     @Test
     public void assertTitle() {
+
+        setDefaultOrientation();
 
         waitForElementAndClick(
                 By.xpath("//*[contains(@text,'SKIP')]"),
@@ -229,6 +235,8 @@ public class Lecture4 {
                 5
         );
 
+        driver.rotate(ScreenOrientation.LANDSCAPE);
+
 
         assertElementPresent(
                 By.xpath("//*[@text='Java (programming language)']"),
@@ -237,8 +245,6 @@ public class Lecture4 {
 
 
     }
-
-
 
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
@@ -346,9 +352,9 @@ public class Lecture4 {
         return element.getAttribute(attribute);
     }
 
-    private void  assertElementPresent(By by, String error_message) {
+    private void assertElementPresent(By by, String error_message) {
         WebElement element = getElement(by);
-        if(!element.isEnabled()) {
+        if (!element.isEnabled()) {
             System.out.println(error_message);
         }
     }
@@ -356,5 +362,12 @@ public class Lecture4 {
     private WebElement getElement(By by) {
         WebElement element = driver.findElement(by);
         return element;
+    }
+
+    private void setDefaultOrientation() {
+        ScreenOrientation orientation = driver.getOrientation();
+        if (orientation == ScreenOrientation.LANDSCAPE) {
+            driver.rotate(ScreenOrientation.PORTRAIT);
+        }
     }
 }
