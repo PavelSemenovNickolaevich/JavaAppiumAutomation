@@ -143,6 +143,18 @@ public class MainPageObject {
         return elements;
     }
 
+    protected void assertElementPresent(By by, String error_message) {
+        WebElement element = getElement(by);
+        if (!element.isEnabled()) {
+            System.out.println(error_message);
+        }
+    }
+
+    private WebElement getElement(By by) {
+        WebElement element = driver.findElement(by);
+        return element;
+    }
+
 
 }
 

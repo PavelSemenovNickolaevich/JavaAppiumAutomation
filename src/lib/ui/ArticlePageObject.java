@@ -115,17 +115,26 @@ public class ArticlePageObject extends MainPageObject {
     }
 
     public void assertArticleExists() {
-        waitForElementAndClick(
+       this.waitForElementAndClick(
                 By.xpath("//*[@text='High-level programming language']"),
                 "Cannot find JS High-level programming language'",
                 5
         );
 
-        waitForElementPresent(
+      this.waitForElementPresent(
                 By.xpath("//*[@text='High-level programming language']"),
                 "Cannot find High-level programming language title",
                 5
         );
     }
+
+    public void assertTitlePresentWithoutTimeOut() {
+      this.assertElementPresent(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot find element - title"
+        );
+    }
+
+
 
 }
