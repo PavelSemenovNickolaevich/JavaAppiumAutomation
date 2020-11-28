@@ -2,6 +2,9 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class SearchPageObject extends MainPageObject {
 
@@ -12,7 +15,8 @@ public class SearchPageObject extends MainPageObject {
             SKIP_FIRST_PAGE = "//*[contains(@text,'SKIP')]",
             SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
             SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results']",
-            SEARCH_RESULT_ELEMENT = "//*[@text='Linkin Park discography']";
+            SEARCH_RESULT_ELEMENT = "//*[@text='Linkin Park discography']",
+            SEARCH_RESULT_ELEMENTS = "org.wikipedia:id/page_list_item_title";
 
 
     public SearchPageObject(AppiumDriver driver) {
@@ -83,6 +87,23 @@ public class SearchPageObject extends MainPageObject {
 
     public void assertThereIsNoResultsOfSearch() {
         this.assetElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "We supposed not find any results" );
+    }
+
+    public List getTitlesList() {
+        List<WebElement> titles = this.listOfElements(
+                By.id("org.wikipedia:id/page_list_item_title"),
+                "Titles doesnt exist",
+                10
+        );
+        return titles;
+    }
+
+    public void assertThereIsNoListOfResults() {
+        this.waitForElementNotPresent(
+                By.id(SEARCH_RESULT_ELEMENTS),
+                "Titles exist!!!",
+                10
+        );
     }
 
 

@@ -1,128 +1,47 @@
 package home_work;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import org.junit.After;
+import lib.CoreTestCase;
+import lib.ui.SearchPageObject;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lesson3 {
-
-    private AppiumDriver driver;
-
-    @Before
-    public void setUp() throws Exception {
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "AndroidTestDevice");
-        capabilities.setCapability("platformVersion", "8.0");
-        capabilities.setCapability("automationName", "Appium");
-        capabilities.setCapability("appPackage", "org.wikipedia");
-        capabilities.setCapability("appActivity", ".main.MainActivity");
-        capabilities.setCapability("app", "C:/Users/Paul/Desktop/JavaAppiumAutomation/apks/org.wikipedia.apk");
-
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
+public class Lesson3 extends CoreTestCase {
 
     @Test
-    public void fistTest() throws InterruptedException {
+    public void testCancelSearch() {
 
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text,'SKIP')]"),
-                "Cannot find SKIP element",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find search input",
-                5
-        );
-
-
-        assertElementHasText(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Search Wikipedia",
-                "Text doesnt exist"
-        );
-
-    }
-
-    @Test
-    public void cancelSearch() {
-
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text,'SKIP')]"),
-                "Cannot find SKIP element",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find search input",
-                5
-        );
-
-        waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Android",
-                "Cannot find search input",
-                5
-        );
-
-        List<WebElement> titles = listOfElements(
-                By.id("org.wikipedia:id/page_list_item_title"),
-                "Titles doesnt exist",
-                10
-        );
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.skipFirstPage();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Android");
+        List<WebElement> titles = SearchPageObject.getTitlesList();
 
         String article_titleOne = titles.get(0).getAttribute("text");
         String article_titleTwo = titles.get(1).getAttribute("text");
         String article_titleThree = titles.get(2).getAttribute("text");
 
         List<String> expectedList = new ArrayList<>();
-        expectedList.add("Android");
         expectedList.add("Android (operating system)");
         expectedList.add("Android version history");
+        expectedList.add("Android software development");
         List<String> actualList = new ArrayList<>();
         actualList.add(article_titleOne);
         actualList.add(article_titleTwo);
         actualList.add(article_titleThree);
-        Assert.assertEquals(
+        assertEquals(
                 "We see unexpected title",
                 expectedList,
                 actualList
         );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/search_close_btn"),
-                "Element doesnt exist",
-                5
-        );
-
-        waitForElementNotPresent(
-                By.id("org.wikipedia:id/page_list_item_title"),
-                "Titles exist!!!",
-                10
-        );
-
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.assertThereIsNoResultsOfSearch();
     }
 
     @Test

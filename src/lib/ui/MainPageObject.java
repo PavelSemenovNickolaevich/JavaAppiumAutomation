@@ -126,5 +126,17 @@ public class MainPageObject {
         return element.getAttribute(attribute);
     }
 
+    public List findElements(By by, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n").until(ExpectedConditions.presenceOfElementLocated(by)); //throws a timeout exception if element not present after waiting <timeoutInSeconds> seconds
+        return driver.findElements(by);
+    }
+
+    public List<WebElement> listOfElements(By by, String error_message, long timeoutInSeconds) {
+        List<WebElement> elements = (List<WebElement>) findElements(by, error_message, timeoutInSeconds);
+        return elements;
+    }
+
+
 }
 

@@ -4,6 +4,8 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public class ArticlePageObject extends MainPageObject {
 
     private static final String
@@ -81,4 +83,6 @@ public class ArticlePageObject extends MainPageObject {
                 5
         );
     }
+
+
 }
