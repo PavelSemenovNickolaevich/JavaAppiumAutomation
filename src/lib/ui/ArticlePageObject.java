@@ -4,8 +4,6 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
-
 public class ArticlePageObject extends MainPageObject {
 
     private static final String
@@ -53,11 +51,13 @@ public class ArticlePageObject extends MainPageObject {
                 5
         );
 
+
         this.waitForElementAndClick(
                 By.id(ADD_TO_MY_LIST_OVERLAY),
                 "Cannot find 'Got it' tip overlay ",
                 5
         );
+
         this.waitForElementAndSendKeys(
                 By.id(MY_LIST_INPUT),
                 name_of_folder,
@@ -70,6 +70,28 @@ public class ArticlePageObject extends MainPageObject {
                 5
         );
     }
+
+    public void addSecondArticleToMyList() {
+
+        this.waitForElementAndClick(
+                By.id(OPTIONS_BUTTON),
+                "Cannot find button to open article options",
+                5
+        );
+
+        this.waitForElementAndClick(
+                By.id(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find button ADD TO LIST",
+                5
+        );
+
+        this.waitForElementAndClick(
+                By.id("org.wikipedia:id/item_title"),
+                "Cannot find folder title",
+                5
+        );
+    }
+
 
     public void closeArticle() {
         this.waitForElementAndClick(
@@ -84,5 +106,26 @@ public class ArticlePageObject extends MainPageObject {
         );
     }
 
+    public void closeArticleOneClick() {
+        this.waitForElementAndClick(
+                By.xpath(CLOSE_ARTICLE_BUTTON),
+                "Cannot close article, cannot find arrow link",
+                5
+        );
+    }
+
+    public void assertArticleExists() {
+        waitForElementAndClick(
+                By.xpath("//*[@text='High-level programming language']"),
+                "Cannot find JS High-level programming language'",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@text='High-level programming language']"),
+                "Cannot find High-level programming language title",
+                5
+        );
+    }
 
 }

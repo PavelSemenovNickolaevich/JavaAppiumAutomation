@@ -1,205 +1,54 @@
 package home_work;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.junit.After;
-import org.junit.Before;
+import lib.CoreTestCase;
+import lib.ui.ArticlePageObject;
+import lib.ui.MyListPageObject;
+import lib.ui.NavigationUi;
+import lib.ui.SearchPageObject;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 
-public class Lecture4 {
-    private AppiumDriver driver;
+public class Lecture4 extends CoreTestCase {
 
-    @Before
-    public void setUp() throws Exception {
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("deviceName", "AndroidTestDevice");
-        capabilities.setCapability("platformVersion", "8.0");
-        capabilities.setCapability("automationName", "Appium");
-        capabilities.setCapability("appPackage", "org.wikipedia");
-        capabilities.setCapability("appActivity", ".main.MainActivity");
-        capabilities.setCapability("app", "C:/Users/Paul/Desktop/JavaAppiumAutomation/apks/org.wikipedia.apk");
-
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
 
     @Test
-    public void saveTwoArticles() {
+    public void testSaveTwoArticles() {
 
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.skipFirstPage();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
 
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text,'SKIP')]"),
-                "Cannot find SKIP element",
-                1
-        );
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject.waitForTitleElement();
+        String article_title = ArticlePageObject.getArticleTitle();
+        String name_of_folder = "Learning programming";
+        ArticlePageObject.addArticleToMyList(name_of_folder);
+        ArticlePageObject.closeArticleOneClick();
+        SearchPageObject.clickByArticleWithSubstring("High-level programming language");
+        ArticlePageObject.addSecondArticleToMyList();
+        ArticlePageObject.closeArticle();
 
-        waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find search input",
-                5
-        );
+        NavigationUi NavigationUi = new NavigationUi(driver);
+        NavigationUi.clickBackButton();
+        NavigationUi.ClickMyLists();
 
-
-        waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Java",
-                "Cannot find search input",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//*[@text='Object-oriented programming language']"),
-                "Cannot find OOP language by 'Java'",
-                5
-        );
-
-        waitForElementPresent(
-                By.xpath("//*[@text='Object-oriented programming language']"),
-                "Cannot find OOP language by 'Java'",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/article_menu_bookmark"),
-                "Cannot find button to open article options",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/snackbar_action"),
-                "Cannot find button ADD TO LIST",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/onboarding_button"),
-                "Cannot find 'Got it' tip overlay ",
-                5
-        );
-        waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/text_input"),
-                "Learning programming",
-                "Cannot put text articles folder input",
-                5
-        );
-        waitForElementAndClick(
-                By.xpath("//*[@text='OK']"),
-                "Cannot press pk button",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
-                "Cannot close article, cannot find arrow link",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//*[@text='High-level programming language']"),
-                "Cannot find OHigh-level programming language",
-                5
-        );
-
-        waitForElementPresent(
-                By.xpath("//*[@text='High-level programming language']"),
-                "Cannot find High-level programming language title",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/article_menu_bookmark"),
-                "Cannot find button to open article options",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/snackbar_action"),
-                "Cannot find button ADD TO LIST",
-                5
-        );
-
-        waitForElementAndClick(
-                By.id("org.wikipedia:id/item_title"),
-                "Cannot find folder title",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
-                "Cannot close article, cannot find arrow link",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
-                "Cannot close article, cannot find arrow link",
-                5
-        );
-
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@index='0']"),
-                "Cannot close article, cannot find arrow link",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
-                "Cannot find icon",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//*[@text='Learning programming']"),
-                "Cannot find 'Learning programming'",
-                5
-        );
-
-        swipeElementToLeft(
-                By.xpath("//*[@text='Java (programming language)']"),
-                "Cannot find saved article"
-        );
-
-        waitForElementNotPresent(
-                By.xpath("//*[@text='Java (programming language)']"),
-                "Cannot delete saved article ",
-                5
-        );
-
-        waitForElementAndClick(
-                By.xpath("//*[@text='High-level programming language']"),
-                "Cannot find JS High-level programming language'",
-                5
-        );
-
-        waitForElementPresent(
-                By.xpath("//*[@text='High-level programming language']"),
-                "Cannot find High-level programming language title",
-                5
-        );
-
-        driver.rotate(ScreenOrientation.LANDSCAPE);
+        MyListPageObject MyListPageObject = new MyListPageObject(driver);
+        MyListPageObject.openFolderByName(name_of_folder);
+        MyListPageObject.swipeByArticleToDelete(article_title);
+        ArticlePageObject.assertArticleExists();
 
 
     }

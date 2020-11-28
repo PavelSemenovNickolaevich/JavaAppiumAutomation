@@ -41,7 +41,7 @@ public class Lesson3 extends CoreTestCase {
                 actualList
         );
         SearchPageObject.clickCancelSearch();
-        SearchPageObject.assertThereIsNoResultsOfSearch();
+        SearchPageObject.assertThereIsNoListOfResults();
     }
 
     @Test
