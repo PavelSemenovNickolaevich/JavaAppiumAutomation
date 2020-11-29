@@ -16,7 +16,12 @@ public class SearchPageObject extends MainPageObject {
             SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
             SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results']",
             SEARCH_RESULT_ELEMENT = "//*[@text='Linkin Park discography']",
-            SEARCH_RESULT_ELEMENTS = "org.wikipedia:id/page_list_item_title";
+            SEARCH_RESULT_ELEMENTS = "org.wikipedia:id/page_list_item_title",
+        //    SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//org.wikipedia:id/search_results_list::*[*[@text='{SUBSTRING_TITLE}'][@text='{SUBSTRING_DESCRIPTION}']]";
+       //     SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@text='{SUBSTRING_TITLE}' and @text='{SUBSTRING_DESCRIPTION}']";
+     //      SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_results_container']/child::*[@text='{SUBSTRING_TITLE}'] and [@text='{SUBSTRING_DESCRIPTION]";
+     //      SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_results_container']/child::*[@text='{SUBSTRING_TITLE}'] and [@text='{SUBSTRING_DESCRIPTION]";
+         SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_results_container']//*[@text='{SUBSTRING_TITLE}']//*[@text='{SUBSTRING_DESCRIPTION}']";
 
 
     public SearchPageObject(AppiumDriver driver) {
@@ -45,6 +50,16 @@ public class SearchPageObject extends MainPageObject {
     //TEMPLATES METHODS
     private static String getResultSearchElement(String substring) {
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
+    }
+
+
+    private static String getResultSearchElement(String substringTitle, String substringDescription) {
+        return SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION.replace("{SUBSTRING_TITLE}", substringTitle).replace("{SUBSTRING_DESCRIPTION}", substringDescription);
+    }
+
+    public void waitForElementByTitleAndDescription(String title, String description) {
+        String search_result_element_with_article_description = getResultSearchElement(title, description);
+        this.waitForElementPresent(By.xpath(search_result_element_with_article_description), "Cannot find element with " + title + " or " + description);
     }
 
     public void initSearchInput() {
@@ -82,11 +97,11 @@ public class SearchPageObject extends MainPageObject {
     }
 
     public void waitForEmptyResultsLabel() {
-        this.waitForElementPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT), "Cannot find empty result element", 10 );
+        this.waitForElementPresent(By.xpath(SEARCH_EMPTY_RESULT_ELEMENT), "Cannot find empty result element", 10);
     }
 
     public void assertThereIsNoResultsOfSearch() {
-        this.assetElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "We supposed not find any results" );
+        this.assetElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "We supposed not find any results");
     }
 
     public List getTitlesList() {
@@ -105,10 +120,6 @@ public class SearchPageObject extends MainPageObject {
                 10
         );
     }
-
-
-
-
 
 
 }

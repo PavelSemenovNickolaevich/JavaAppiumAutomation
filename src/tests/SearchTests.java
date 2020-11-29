@@ -62,4 +62,15 @@ public class SearchTests extends CoreTestCase {
 
     }
 
+    @Test
+    public void testWithTwoSubStrings() {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.skipFirstPage();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForElementByTitleAndDescription("Java (programming language)", "Object-oriented programming language");
+       // SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
+
+    }
+
 }
