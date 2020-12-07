@@ -17,11 +17,7 @@ public class SearchPageObject extends MainPageObject {
             SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results']",
             SEARCH_RESULT_ELEMENT = "//*[@text='Linkin Park discography']",
             SEARCH_RESULT_ELEMENTS = "org.wikipedia:id/page_list_item_title",
-        //    SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//org.wikipedia:id/search_results_list::*[*[@text='{SUBSTRING_TITLE}'][@text='{SUBSTRING_DESCRIPTION}']]";
-       //     SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@text='{SUBSTRING_TITLE}' and @text='{SUBSTRING_DESCRIPTION}']";
-     //      SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_results_container']/child::*[@text='{SUBSTRING_TITLE}'] and [@text='{SUBSTRING_DESCRIPTION]";
-     //      SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_results_container']/child::*[@text='{SUBSTRING_TITLE}'] and [@text='{SUBSTRING_DESCRIPTION]";
-         SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//*[@resource-id='org.wikipedia:id/search_results_container']//*[@text='{SUBSTRING_TITLE}']//*[@text='{SUBSTRING_DESCRIPTION}']";
+            SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "//android.view.ViewGroup/*[@text='{SUBSTRING_TITLE}']/../*[@text='{SUBSTRING_DESCRIPTION}']";
 
 
     public SearchPageObject(AppiumDriver driver) {
@@ -56,6 +52,7 @@ public class SearchPageObject extends MainPageObject {
     private static String getResultSearchElement(String substringTitle, String substringDescription) {
         return SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION.replace("{SUBSTRING_TITLE}", substringTitle).replace("{SUBSTRING_DESCRIPTION}", substringDescription);
     }
+
 
     public void waitForElementByTitleAndDescription(String title, String description) {
         String search_result_element_with_article_description = getResultSearchElement(title, description);

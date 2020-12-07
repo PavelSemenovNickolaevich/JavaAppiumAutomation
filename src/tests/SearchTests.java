@@ -1,9 +1,13 @@
 package tests;
 
 import lib.CoreTestCase;
-import lib.ui.ArticlePageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class SearchTests extends CoreTestCase {
 
@@ -69,8 +73,22 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForElementByTitleAndDescription("Java (programming language)", "Object-oriented programming language");
-       // SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
 
     }
 
+    @Test
+    public void testSearchAnyWords() {
+        String word = "Hello";
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.skipFirstPage();
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine(word);
+        List<WebElement> title = SearchPageObject.listOfElements(By.id("org.wikipedia:id/page_list_item_title"), "List is empty", 5);
+//        if (title.size() >= 3) {
+//            for(int i = 0; i < 3; i++) {
+//                assertEquals(true, title.get(i).getText().contains(word));
+//            }
+//        }
+        IntStream.rangeClosed(0, 2).forEach(i -> assertTrue(title.get(i).getText().contains(word)));
+    }
 }
