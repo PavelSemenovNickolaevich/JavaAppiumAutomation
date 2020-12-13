@@ -25,7 +25,7 @@ public class MyListPageObject extends MainPageObject {
 
         String folder_name_xpath = getFolderXpathByName(name_of_folder);
         this.waitForElementAndClick(
-                By.xpath(folder_name_xpath),
+             folder_name_xpath,
                 "Cannot find folder by xpath " + name_of_folder,
                 5
         );
@@ -33,12 +33,12 @@ public class MyListPageObject extends MainPageObject {
 
     public void waitForArticleToDAppearByTitle(String article_title) {
         String article_xpath = getFolderXpathByName(article_title);
-        this.waitForElementPresent(By.xpath(article_xpath), "Cannot find saved article by title " + article_title, 15);
+        this.waitForElementPresent(article_xpath, "Cannot find saved article by title " + article_title, 15);
     }
 
     public void waitForArticleToDisappearByTitle(String article_title) {
         String article_xpath = getFolderXpathByName(article_title);
-        this.waitForElementNotPresent(By.xpath(article_xpath), "Saved article present with title " + article_title, 15);
+        this.waitForElementNotPresent(article_xpath, "Saved article present with title " + article_title, 15);
     }
 
     public void swipeByArticleToDelete(String article_title) {
@@ -46,7 +46,7 @@ public class MyListPageObject extends MainPageObject {
         this.waitForArticleToDAppearByTitle(article_title);
         String article_xpath = getFolderXpathByName(article_title);
         this.swipeElementToLeft(
-                By.xpath(article_xpath),
+                article_xpath,
                 "Cannot find saved article"
         );
         this.waitForArticleToDisappearByTitle(article_title);

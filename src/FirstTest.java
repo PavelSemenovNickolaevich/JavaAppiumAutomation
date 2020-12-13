@@ -1,9 +1,15 @@
 import lib.CoreTestCase;
 import lib.ui.MainPageObject;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 public class FirstTest extends CoreTestCase {
+    private static final String
+            BUTTON_SKIP = "xpath://*[contains(@text,'SKIP')]",
+            SEARCH_INPUT = "//*[contains(@text,'Search Wikipedia')]",
+            INPUT_WORDS = "xpath://*[contains(@text,'SKIP')]",
+            ARTICLE = "xpath://*[@text='View article in browser']",
+            FIND_WORD = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_title'][@text='Appium']";
+
 
     private MainPageObject MainPageObject;
 
@@ -17,27 +23,27 @@ public class FirstTest extends CoreTestCase {
     public void testSwipeArticleSecond() {
 
         MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text,'SKIP')]"),
+                BUTTON_SKIP,
                 "Cannot find SKIP element",
                 1
         );
 
         MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                SEARCH_INPUT,
                 "Cannot find search input",
                 5
         );
 
 
         MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_src_text"),
+                INPUT_WORDS,
                 "Appium",
                 "Cannot find search input",
                 5
         );
 
         MainPageObject.waitForElementAndClick(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title'][@text='Appium']"),
+                FIND_WORD,
                 "Cannot find Appium in search",
                 5
         );
@@ -48,7 +54,7 @@ public class FirstTest extends CoreTestCase {
 //                5
 //        );
         MainPageObject.swipeUpToFindElement(
-                By.xpath("//*[@text='View article in browser']"),
+                ARTICLE,
                 "Cannot find the end of the article",
                 20);
 
