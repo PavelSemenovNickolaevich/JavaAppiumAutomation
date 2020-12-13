@@ -51,4 +51,26 @@ public class CoreTestCase extends TestCase {
         driver.runAppInBackground(Duration.ofSeconds(seconds));
 //        driver.launchApp();
     }
+
+    private DesiredCapabilities getCapabilitiesByPlatform() throws Exception {
+        String platform = System.getenv("PLATFORM");
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        if (platform.equals("android")) {
+            capabilities.setCapability("platformName", "Android");
+            capabilities.setCapability("deviceName", "AndroidTestDevice");
+            capabilities.setCapability("platformVersion", "8.0");
+            capabilities.setCapability("automationName", "Appium");
+            capabilities.setCapability("appPackage", "org.wikipedia");
+            capabilities.setCapability("appActivity", ".main.MainActivity");
+            capabilities.setCapability("app", "C:/Users/Paul/Desktop/JavaAppiumAutomation/apks/org.wikipedia.apk");
+        } else if (platform.equals("ios")) {
+            capabilities.setCapability("platformName", "iOS");
+            capabilities.setCapability("deviceName", "iPhone SE");
+            capabilities.setCapability("platformVersion", "11.3");
+            capabilities.setCapability("app", "C:/Users/Paul/Desktop/JavaAppiumAutomation/apks/Wikipedia.app");
+        } else {
+            throw new Exception("Cannot get run platform from env variable. Platform value " + platform);
+        }
+    }
 }

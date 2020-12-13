@@ -92,3 +92,19 @@ public class SearchTests extends CoreTestCase {
         IntStream.rangeClosed(0, 2).forEach(i -> assertTrue(title.get(i).getText().contains(word)));
     }
 }
+
+
+
+/**
+ 1)Установить XCode
+ 2)Установить Java
+ 3)скачать Appium Desktop
+ 4)Скачать - запустить app
+ 5)Установить через скрипты зависимости
+ 6)Открыть проект в икскод и запустить в симуляторе
+ 7)Подключить appium к проекту, устанвоить необходимые капабилитес
+ platformName  text  iOS
+ platformVersion text 13.3
+ deviceName text iPhone SE
+ app text  ../..полный путь к приложению
+ */
