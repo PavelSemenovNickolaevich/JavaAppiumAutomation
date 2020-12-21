@@ -6,18 +6,18 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class SearchPageObject extends MainPageObject {
+public abstract class SearchPageObject extends MainPageObject {
 
-    private static final String
-            SEARCH_INIT_ELEMENT = "xpath://*[contains(@text,'Search Wikipedia')]",
-            SEARCH_INPUT = "xpath://*[contains(@text,'Search Wikipedia')]",
-            SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://*[@text='{SUBSTRING}']",
-            SKIP_FIRST_PAGE = "xpath://*[contains(@text,'SKIP')]",
-            SEARCH_CANCEL_BUTTON = "id:org.wikipedia:id/search_close_btn",
-            SEARCH_EMPTY_RESULT_ELEMENT = "xpath://*[@text='No results']",
-            SEARCH_RESULT_ELEMENT = "xpath://*[@text='Linkin Park discography']",
-            SEARCH_RESULT_ELEMENTS = "id:org.wikipedia:id/page_list_item_title",
-            SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION = "xpath://android.view.ViewGroup/*[@text='{SUBSTRING_TITLE}']/../*[@text='{SUBSTRING_DESCRIPTION}']";
+    protected static String
+            SEARCH_INIT_ELEMENT,
+            SEARCH_INPUT,
+            SEARCH_RESULT_BY_SUBSTRING_TPL,
+            SKIP_FIRST_PAGE,
+            SEARCH_CANCEL_BUTTON,
+            SEARCH_EMPTY_RESULT_ELEMENT,
+            SEARCH_RESULT_ELEMENT,
+            SEARCH_RESULT_ELEMENTS,
+            SEARCH_RESULT_WITH_TITLE_AND_DESCRIPTION;
 
 
     public SearchPageObject(AppiumDriver driver) {
