@@ -2,6 +2,7 @@ package tests;
 
 import lib.CoreTestCase;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearch() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipFirstPage();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -25,7 +26,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testCancelSearch() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipFirstPage();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -39,7 +40,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testAmountOfNotEmptySearch() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject =SearchPageObjectFactory.get(driver);
         SearchPageObject.skipFirstPage();
         SearchPageObject.initSearchInput();
         String search_line = "Linkin Park discography";
@@ -56,7 +57,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testAmountOfEmptySearch() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipFirstPage();
         SearchPageObject.initSearchInput();
         String search_line = "bdrgergbewv";
@@ -68,7 +69,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testWithTwoSubStrings() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipFirstPage();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -79,7 +80,7 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearchAnyWords() {
         String word = "Hello";
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipFirstPage();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(word);

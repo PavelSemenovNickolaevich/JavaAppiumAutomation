@@ -1,7 +1,6 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 
 public class WelcomePageObject extends MainPageObject {
 
@@ -11,7 +10,8 @@ public class WelcomePageObject extends MainPageObject {
             NEXT_ONE = "id:New ways to explore",
             NEXT_TWO = "id:dd or edit preferred languages",
             NEXT_THREE = "id:Learn more about data collected",
-            NEXT_FOURTH = "id:Get started";
+            NEXT_FOURTH = "id:Get started",
+            SKIP = "id:Skip";
 
     public WelcomePageObject(AppiumDriver driver) {
         super(driver);
@@ -42,4 +42,7 @@ public class WelcomePageObject extends MainPageObject {
     }
 
 
+    public void clickSkip() {
+        this.waitForElementAndClick(SKIP, "Cannot find click and skip button", 5);
+    }
 }

@@ -11,7 +11,7 @@ public class GerStartedTest extends CoreTestCase {
     @Test
     public void testPassThroughWelcome() {
 
-        if(Platform.isAndroid()) {
+        if(Platform.getInstance().isAndroid()) {
             return;
         }
 

@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.MyListPageObject;
 import lib.ui.NavigationUi;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class MyListsTests extends CoreTestCase {
@@ -12,7 +13,7 @@ public class MyListsTests extends CoreTestCase {
     @Test
     public void testSaveFirstArticleToMyList() {
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.skipFirstPage();
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
