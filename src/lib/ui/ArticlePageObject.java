@@ -98,13 +98,13 @@ abstract public class ArticlePageObject extends MainPageObject {
         this.waitForElementAndClick(
                 OPTIONS_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find button ADD TO LIST",
-                5
+                10
         );
 
         this.waitForElementAndClick(
                 TITLE_LIST,
                 "Cannot find folder title",
-                5
+                10
         );
     }
 

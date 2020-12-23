@@ -17,7 +17,7 @@ public class AndroidArticlePageObject extends ArticlePageObject {
         CLOSE_ARTICLE_BUTTON_ONE = "xpath://android.widget.ImageButton[@index='0']";
         ARTICLE_TWO = "xpath://*[@text='High-level programming language']";
         ARTICLE_THREE = "xpath://*[@text='High-level programming language']";
-        TITLE_LIST = "org.wikipedia:id/item_title";
+        TITLE_LIST = "id:org.wikipedia:id/item_title";
     }
 
     public AndroidArticlePageObject(AppiumDriver driver) {

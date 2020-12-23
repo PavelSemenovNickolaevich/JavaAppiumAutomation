@@ -9,7 +9,8 @@ public class AndroidNavigationUI extends NavigationUi {
     }
 
     static {
-        MY_LISTS_LINK = "xpath://android.widget.FrameLayout[@content-desc='My lists']";
-        BUTTON_BACK = "xpath://android.widget.FrameLayout[@content-desc='My lists']";
+       MY_LISTS_LINK = "xpath://android.widget.FrameLayout[@content-desc='My lists']";
+       // MY_LISTS_LINK = "id:org.wikipedia:id/largeLabel";
+        BUTTON_BACK = "xpath://android.view.ViewGroup/android.widget.ImageButton";
     }
 }
